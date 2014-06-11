@@ -5,15 +5,14 @@
 
 require conf/machine/include/tune-mips32.inc
 
+DEFAULTTUNE = "mips32el-nf"
+
 MACHINE_FEATURES = "ext2 ext3 serial"
 
 KERNEL_IMAGETYPE = "vmlinux"
-#KERNEL_ALT_IMAGETYPE = "vmlinux.bin"
 KERNEL_IMAGE_STRIP_EXTRA_SECTIONS  = ".comment"
 
 PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto-custom"
-
-DEFAULTTUNE = "mips32el-nf"
 
 SERIAL_CONSOLE = "115200 ttyS0"
 

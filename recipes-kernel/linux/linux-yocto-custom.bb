@@ -33,7 +33,7 @@ require recipes-kernel/linux/linux-yocto.inc
 SRC_URI = "git://soft02/proj/sw/git/linux.git;branch=vtss_3.5;protocol=ssh;bareclone=1"
 SRC_URI += "file://defconfig"
 
-KBRANCH = "vtss_3.5"
+SRC_URI_append_vcoreiii-lu26 = " file://vcoreiii-lu26.scc file://vcoreiii-lu26.cfg"
 
 LINUX_VERSION ?= "3.5"
 LINUX_VERSION_EXTENSION ?= "-custom"
@@ -43,7 +43,13 @@ SRCREV="${AUTOREV}"
 PR = "r1"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
-COMPATIBLE_MACHINE_vcoreiii = "vcoreiii"
+COMPATIBLE_MACHINE_vcoreiii-lu26 = "vcoreiii"
+KBRANCH_vcoreiii-lu26 = "vtss_3.5"
+#SRC_URI_vcoreiii-lu26 += "file://vcoreiii-lu26.scc file://vcoreiii-lu26.cfg"
+
+#COMPATIBLE_MACHINE_vcoreiii-jr1 = "vcoreiii"
+#KBRANCH_vcoreiii-jr1 = "vtss_3.5"
+#SRC_URI_vcoreiii-jr1 += "file://vcoreiii-jr1.scc file://vcoreiii-jr1.cfg"
 
 kernel_do_deploy_append() {
     pwd
