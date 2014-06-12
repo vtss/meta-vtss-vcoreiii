@@ -43,7 +43,11 @@ PV = "${LINUX_VERSION}+git${SRCPV}"
 
 COMPATIBLE_MACHINE_luton26 = "luton26"
 KBRANCH_luton26 = "vtss_3.5"
-SRC_URI_append_luton26 = " file://vcoreiii-lu26.scc file://vcoreiii-lu26.cfg"
+SRC_URI_append_luton26 = " file://luton26.scc file://luton26.cfg"
+
+COMPATIBLE_MACHINE_jaguar1 = "jaguar1"
+KBRANCH_jaguar1 = "vtss_3.5"
+SRC_URI_append_jaguar1 = " file://jaguar1.scc file://jaguar1.cfg"
 
 kernel_do_deploy_append() {
     pwd
