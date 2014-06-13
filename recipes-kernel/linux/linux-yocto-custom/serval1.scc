@@ -1,0 +1,7 @@
+#
+# The top-level 'feature' for the vcoreiii custom kernel.
+#
+# Essentially this is a convenient top-level container or starting
+# point for adding lower-level config fragements and features.
+#
+kconf hardware serval1.cfg
