@@ -5,3 +5,4 @@
 # point for adding lower-level config fragements and features.
 #
 kconf hardware jaguar1.cfg
+kconf hardware vcoreiii-mk1.cfg
