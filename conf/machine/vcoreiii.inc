@@ -19,6 +19,6 @@ SERIAL_CONSOLE = "115200 ttyS0"
 
 MACHINE_EXTRA_RRECOMMENDS = " kernel-modules"
 
-IMAGE_FSTYPES ?= "squashfs-xz jffs2"
+IMAGE_FSTYPES ?= "squashfs-xz jffs2 tar.gz"
 
 IMAGE_DEPENDS_squashfs-xz = "squashfs-tools-native"
