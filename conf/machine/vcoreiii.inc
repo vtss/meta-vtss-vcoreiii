@@ -13,7 +13,7 @@ KERNEL_IMAGETYPE = "vmlinux"
 KERNEL_IMAGE_STRIP_EXTRA_SECTIONS  = ".comment"
 
 PREFERRED_PROVIDER_virtual/kernel ?= "linux-yocto"
-PREFERRED_VERSION_linux-yocto ?= "3.8%"
+PREFERRED_VERSION_linux-yocto ?= "3.14%"
 
 SERIAL_CONSOLE = "115200 ttyS0"
 
