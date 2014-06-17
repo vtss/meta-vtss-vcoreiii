@@ -2,7 +2,7 @@ require recipes-kernel/linux/linux-yocto.inc
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 
-LINUX_VERSION = "3.4"
+LINUX_VERSION = "3.8"
 KBRANCH = "vtss_${LINUX_VERSION}"
 KMETA = ""
 
