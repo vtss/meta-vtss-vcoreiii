@@ -4,4 +4,7 @@
 # Essentially this is a convenient top-level container or starting
 # point for adding lower-level config fragements and features.
 #
+define KMACHINE serval1
+define KTYPE standard
+define KARCH mips
 kconf hardware serval1.cfg
