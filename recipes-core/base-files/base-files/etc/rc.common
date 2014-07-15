@@ -1,6 +1,4 @@
 #!/bin/sh
-# Copyright (C) 2006 OpenWrt.org
-
 . $IPKG_INSTROOT/etc/functions.sh
 
 start() {

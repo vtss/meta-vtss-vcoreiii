@@ -1,8 +1,8 @@
 #!/bin/sh
-# Copyright (C) 2006 OpenWrt.org
 . /etc/functions.sh
 
 jffs2_ready () {
+    echo -e "jffs2_ready() starts...\n"
         mtdpart="$(find_mtd_part rootfs_data)"
         magic=$(hexdump $mtdpart -n 4 -e '4/1 "%02x"')
         [ "$magic" != "deadc0de" ]
@@ -20,6 +20,7 @@ grep rootfs_data /proc/mtd >/dev/null 2>/dev/null && {
                 ramoverlay
         }
 } || {
+        echo "rootfs_data is not available"
         mtd unlock rootfs
         mount -o remount,rw /dev/root /
 }

@@ -5,7 +5,6 @@ SRC_URI += " file://etc/preinit \
 	     file://etc/functions.sh \
 	     file://etc/rc.common \
 	     file://etc/rc.local \
-	     file://etc/init.d/boot \
 	     file://sbin/mount_root \
 	     file://bin/firstboot \
 "
@@ -41,10 +40,6 @@ do_install_append() {
     install -m 0775 ${WORKDIR}/etc/preinit	${D}${sysconfdir}
     install -m 0775 ${WORKDIR}/etc/diag.sh 	${D}${sysconfdir}
     install -m 0775 ${WORKDIR}/etc/functions.sh ${D}${sysconfdir}
-    install -m 0775 ${WORKDIR}/etc/rc.common	${D}${sysconfdir}
-    install -m 0775 ${WORKDIR}/etc/rc.local	${D}${sysconfdir}
-    install -d ${D}${sysconfdir}/init.d
-    install -m 0775 ${WORKDIR}/etc/init.d/boot	${D}${sysconfdir}/init.d
     install -m 0775 ${WORKDIR}/sbin/mount_root 	${D}${base_sbindir}
     install -m 0775 ${WORKDIR}/bin/firstboot 	${D}${base_bindir}
 
@@ -62,6 +57,5 @@ do_install_append() {
     #   rc5.d/S90run-script will be called (with %1='start') when entering runlevel 5.
     #   rc5.d/K90run-script will be called (with %1='stop') when exiting runlevel 5.
     #
-    ln -sf ../init.d/boot  ${D}${sysconfdir}/rcS.d/S03boot
 }
 
