@@ -19,7 +19,6 @@ exec <$M0 >$M1 2>&0
 
 # Start preinit to setup Unionfs
 echo "- vtss-preinit -"
-echo "Press CTRL-C for failsafe"
 trap 'FAILSAFE=true' INT
 trap 'FAILSAFE=true' USR1
 if [ -e /etc/preinit.arch ]; then
