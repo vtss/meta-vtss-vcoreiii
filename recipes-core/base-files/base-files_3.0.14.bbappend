@@ -23,6 +23,7 @@ do_install_append() {
     # ${D}${sbindir} is where executable files are to be stored (e.g. /sbin).
     #
     install -d ${D}/jffs
+    install -d ${D}/mmc
     install -d ${D}/rom
     install -d ${D}${sysconfdir}/init.d
     install -d ${D}${sysconfdir}/rcS.d

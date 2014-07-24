@@ -8,8 +8,9 @@ jffs2_ready () {
         [ "$magic" != "deadc0de" ]
 }
 
-grep rootfs_data /proc/mtd >/dev/null 2>/dev/null && {
-        . /bin/firstboot
+if grep rootfs_data /proc/mtd >/dev/null 2>/dev/null; then {
+        echo "rootfs_data is available"
+	. /bin/firstboot
         mtd unlock rootfs_data
 	{
                 echo "switching to jffs2"
@@ -19,8 +20,27 @@ grep rootfs_data /proc/mtd >/dev/null 2>/dev/null && {
                 echo "jffs2 not ready yet; using ramdisk"
                 ramoverlay
         }
-} || {
-        echo "rootfs_data is not available"
+}
+elif grep mmcblk0p1 /proc/partitions > /dev/null 2>/dev/null; then {
+	echo "sd/mmc card is available"
+	. /bin/firstboot
+	{
+	    echo "switching to sd/mmc"
+	    mount /dev/mmcblk0p1 /mmc -t ext2
+	    if grep /dev/mmcblk0p1 /proc/mounts; then
+		echo "sd/mmc card is mounted"
+	    else
+		echo "sd/mmc card is not mounted!"
+	    fi
+	    fopivot /mmc /rom
+	} || {
+	    echo "sd/mmc card not ready yet; using ramdisk"
+	    ramoverlay
+	}
+}
+else {
+        echo "Both rootfs_data and sd/mmc are not available"
         mtd unlock rootfs
         mount -o remount,rw /dev/root /
 }
+fi
