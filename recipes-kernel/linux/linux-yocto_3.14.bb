@@ -6,7 +6,7 @@ LINUX_VERSION = "3.14"
 KBRANCH = "vtss_${LINUX_VERSION}"
 KMETA = ""
 
-SRC_URI = "git://soft02/proj/sw/git/yocto/linux-stable.git;protocol=ssh;bareclone=1;branch=${KBRANCH}"
+SRC_URI = "git://github.com/vtss/linux-stable.git;protocol=git;bareclone=1;branch=${KBRANCH}"
 SRC_URI += "file://defconfig"
 
 SRCREV="${AUTOREV}"
