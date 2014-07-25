@@ -25,6 +25,6 @@ SYSVINIT_ENABLED_GETTYS = ""
 # Loose the RTC - don't have it
 MACHINE_FEATURES_BACKFILL_CONSIDERED = "rtc"
 
-IMAGE_FSTYPES ?= "squashfs-xz jffs2 tar.gz"
+IMAGE_FSTYPES ?= "squashfs-xz"
 
 IMAGE_DEPENDS_squashfs-xz = "squashfs-tools-native"

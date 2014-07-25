@@ -23,6 +23,9 @@ SRC_URI_append_jaguar1 = " file://jaguar1.scc file://jaguar1.cfg"
 COMPATIBLE_MACHINE_serval1 = "serval1"
 SRC_URI_append_serval1 = " file://serval1.scc file://serval1.cfg"
 
+COMPATIBLE_MACHINE_jaguar2 = "jaguar2"
+SRC_URI_append_jaguar2 = " file://jaguar2.scc file://jaguar2.cfg"
+
 kernel_do_deploy_append() {
     pwd
     ls -l
