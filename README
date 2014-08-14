@@ -58,11 +58,17 @@ common metadata shared between BSPs) e.g.:
 
 To enable the vcoreiii layer, add the appropriate MACHINE to local.conf:
 
+  MACHINE ?= "luton10"
+ or
+  MACHINE ?= "luton26"
+ or
   MACHINE ?= "jaguar1"
  or
-  MACHINE ?= "jaguar26"
+  MACHINE ?= "jaguar2"
  or 
   MACHINE ?= "serval1"
+ or 
+  MACHINE ?= "serval2"
 
 You should then be able to build a vcoreiii image as such:
 
