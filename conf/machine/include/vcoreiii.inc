@@ -3,6 +3,7 @@
 
 #@DESCRIPTION: Machine configuration for vcoreiii systems
 
+include conf/machine/include/soc-family.inc
 require conf/machine/include/tune-mips32.inc
 
 DEFAULTTUNE = "mips32el-nf"
