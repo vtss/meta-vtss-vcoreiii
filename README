@@ -56,21 +56,24 @@ common metadata shared between BSPs) e.g.:
   poky/meta-xxxx \
   poky/meta-vcoreiii \
 
-To enable the vcoreiii layer, add the appropriate MACHINE to local.conf:
+The supported machine targets are:
 
-  MACHINE ?= "luton10"
- or
-  MACHINE ?= "luton26"
- or
-  MACHINE ?= "jaguar1"
- or
-  MACHINE ?= "jaguar2"
- or 
-  MACHINE ?= "serval1"
- or 
-  MACHINE ?= "serval2"
+MACHINE setting | Target board(s)
+--------------- | ---------------
+luton10         | VSC7424EV, VSC7428EV
+luton26         | VSC5610EV, VSC5611EV
+jaguar1-cu24    | VSC5606EV
+jaguar1-cu48    | VSC5608EV
+serval1         | VSC5616EV, VSC5617EV, VSC5618EV, VSC5619EV
+serval2         | VSC5629EV
+jaguar2-cu24    | VSC5628EV
+jaguar2-cu48    | VSC5627EV
 
-You should then be able to build a vcoreiii image as such:
+To enable the vcoreiii layer, add the appropriate MACHINE to local.conf (f.ex):
+
+> MACHINE ?= "jaguar2-cu24"
+
+You should then be able to build a flash image as such:
 
   $ source oe-init-build-env build_<target>
   $ bitbake core-image-minimal
@@ -85,4 +88,45 @@ target boards.
 
 II. Booting the images
 ======================
+
+The flash images should be put into the RedBoot FIS sections `linux`
+and `root`, respetively. You can use normal redboot "fis" commands for
+this - or you can use the WebStax system as described in AN1125:
+"Vitesse Yocto Linux BSP".
+
+The flash images need to be placed in SPI NOR flash in the locations
+below:
+
+MACHINE         |   Kernel   |    Root    | RootSize | Aux.Data |
+-------         | ---------- | ---------- | -------- | -------- |
+luton10         | 0x40800000 | 0x40A00000 |     6 MB |    NAND  |
+luton26         | 0x40800000 | 0x40A00000 |     6 MB |    NAND  |
+jaguar1-cu24    | 0x40800000 | 0x40A00000 |     6 MB |    NAND  |
+jaguar1-cu48    | 0x40800000 | 0x40A00000 |     6 MB |    NAND  |
+serval1         | 0x40800000 | 0x40A00000 |     6 MB |  SD/MMC  |
+serval2         | 0x40E00000 | 0x41000000 |    10 MB |     NOR  |
+jaguar2-cu24    | 0x40E00000 | 0x41000000 |    10 MB |     NOR  |
+jaguar2-cu48    | 0x40E00000 | 0x41000000 |    10 MB |     NOR  |
+
+The kernel is assumed to reserve 2 MB in all configurations. The root
+file system in the NOR flash is mounted read-only, but augmented with
+a writable flash file system located accordingly to the "Aux.Data"
+column above. 
+
+* If NAND is available, a JFFS2 file system overlay the root file
+system. Typically 256MB is available in NAND.
+
+* If NOR is used, the remainder of the root filesystem is used as a
+JFFS2 file system overlay. The size of the writable section depend on
+the size of the genererated root file system image.
+
+* If SD/MMC is used (`serval1`), the system *must* be fitted with an
+EXT2/3 formatted SD/MMC card of at least 4MB size prior to booting. If
+not, the system will generate warning messages and the root file
+system will be mounted read-only. (But the system will still boot).
+
+After having flashed you system you can boot the system from RedBoot:
+
+> fis load -d linux
+> exec
 
