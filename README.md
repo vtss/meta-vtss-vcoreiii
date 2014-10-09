@@ -103,7 +103,7 @@ luton10         | 0x40800000 | 0x40A00000 |     6 MB |    NAND  |
 luton26         | 0x40800000 | 0x40A00000 |     6 MB |    NAND  |
 jaguar1-cu24    | 0x40800000 | 0x40A00000 |     6 MB |    NAND  |
 jaguar1-cu48    | 0x40800000 | 0x40A00000 |     6 MB |    NAND  |
-serval1         | 0x40800000 | 0x40A00000 |     6 MB |  SD/MMC  |
+serval1         | 0x40880000 | 0x40A80000 |   4.5 MB |  SD/MMC  |
 serval2         | 0x40E00000 | 0x41000000 |    10 MB |     NOR  |
 jaguar2-cu24    | 0x40E00000 | 0x41000000 |    10 MB |     NOR  |
 jaguar2-cu48    | 0x40E00000 | 0x41000000 |    10 MB |     NOR  |
