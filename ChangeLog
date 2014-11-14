@@ -1,11 +1,3 @@
-2014-09-05  Lars Povlsen  <lpovlsen@vitesse.com>
-
-	* Now supporting 'luton10', 'luton26', 'serval1', 'jaguar1-cu24',
-	'jaguar1-cu48', 'serval2', 'jaguar2-cu24', 'jaguar2-cu48'
-	targets. Note that 'jaguar1' has been renamed to 'jaguar1-cu24'.
-
-2014-07-21  Lars Povlsen  <lpovlsen@vitesse.com>
-
-	* vtss_1.00: Initial Release
-
-
+Since this package is released through GitHub, refer to the online git
+repository at https://github.com/vtss/meta-vtss-vcoreiii for detailed
+change information. See NEWS.md for release information.

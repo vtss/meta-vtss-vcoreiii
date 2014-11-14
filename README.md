@@ -7,6 +7,8 @@ The source for this Yocto layer is:
 
 Please see the corresponding sections below for details.
 
+Refer to [NEWS.md](NEWS.md) for release information.
+
 Dependencies
 ============
 
@@ -121,7 +123,7 @@ JFFS2 file system overlay. The size of the writable section depend on
 the size of the genererated root file system image.
 
 * If SD/MMC is used (`serval1`), the system *must* be fitted with an
-EXT2/3 formatted SD/MMC card of at least 4MB size prior to booting. If
+EXT2 formatted SD/MMC card of at least 4MB size prior to booting. If
 not, the system will generate warning messages and the root file
 system will be mounted read-only. (But the system will still boot).
 
