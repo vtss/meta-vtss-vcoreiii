@@ -24,6 +24,8 @@ SRC_URI_append_serval2 =      " file://serval2.cfg"
 
 COMPATIBLE_MACHINE = "luton26|jaguar1|jaguar1-dual|serval1|jaguar2|serval2"
 
+KCONFIG_MODE="--alldefconfig"
+
 kernel_do_deploy_append() {
     pwd
     ls -l
