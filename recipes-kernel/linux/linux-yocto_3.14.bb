@@ -9,7 +9,7 @@ KMETA = ""
 SRC_URI = "git://github.com/vtss/linux-stable.git;protocol=git;bareclone=1;branch=${KBRANCH}"
 SRC_URI += "file://defconfig"
 
-SRCREV_pn-linux-yocto ?= "${AUTOREV}"
+SRCREV                ?= "${AUTOREV}"
 SRCREV_machine        ?= "${AUTOREV}"
 
 PR = "r1"
