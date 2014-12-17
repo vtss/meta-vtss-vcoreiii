@@ -7,14 +7,14 @@ KBRANCH = "vtss_${LINUX_VERSION}"
 KMETA = ""
 
 SRC_URI = "git://github.com/vtss/linux-stable.git;protocol=git;bareclone=1;branch=${KBRANCH}"
-SRC_URI += "file://defconfig"
 
-SRCREV_pn-linux-yocto ?= "${AUTOREV}"
-SRCREV_machine        ?= "${AUTOREV}"
+SRCREV_pn-linux-yocto ?= "fcd1c9cbe39d88ef007832d3898b70295ebd1abe"
+SRCREV_machine        ?= "fcd1c9cbe39d88ef007832d3898b70295ebd1abe"
 
 PR = "r1"
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
+SRC_URI_append         =      " file://defconfig"
 SRC_URI_append_luton26 =      " file://luton26.scc file://luton26.cfg"
 SRC_URI_append_jaguar1 =      " file://jaguar1.scc file://jaguar1.cfg"
 SRC_URI_append_jaguar1-dual = " file://jaguar1-dual.scc file://jaguar1-dual.cfg"

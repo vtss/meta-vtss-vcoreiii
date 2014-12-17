@@ -1,3 +1,26 @@
+# Version : vtss_1.20
+## Date: 2014-12-17
+
+Description: Maintenance release, supporting all VTSS reference
+boards.
+
+New Features
+============
+
+* Support for Yocto `Dizzy` 1.7 has been added. You are recommended to
+  use this Yocto version, although earlier versions still may
+  work. Dizzy 1.7 has a number of usability and performance
+  improvements you are likely to appreciate.
+
+* Kernel recipes now specify specific kernel versions to avoid
+  undesired tracking of the latest versions posted to the kernel
+  tree. If you explicitly want to track the tip of the `vtss_3.14`
+  branch, you can configure `${AUTOREV}` (or use another specific
+  hash). You are recommended to do so in a `.bbappend` customization
+  layer file - or in the build directory `local.conf` file.
+                                               
+* Linux kernel version has been updated to version 3.14.26.
+
 # Version : vtss_1.10
 ## Date: 2014-10-20
 
