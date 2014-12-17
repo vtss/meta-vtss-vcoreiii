@@ -16,10 +16,10 @@ This layer depends on:
 
   URI: git://git.yoctoproject.org/poky.git
   layers: meta meta-yocto meta-yocto-bsp (default poky layers)
-  branch: dylan
+  branch: dizzy
 
-The BSP has been tested on poky-dylan-9.0.3. Later Yocto releases will
-probably work as well, but has this not been verified.
+The BSP has been tested on Yocto Project 1.7 - Dizzy. Other releases
+may work, but this is not guaranteed.
 
 The BSP provide a 3.14.x Linux kernel (currently the latest kernel.org
 longterm release), and include architecture support and platform
