@@ -30,6 +30,6 @@ kernel_do_deploy_append() {
     pwd
     ls -l
     ${OBJCOPY} -O binary -R .note -R .comment -S vmlinux vmlinux.bin
-    gzip -9c < vmlinux.bin > ${DEPLOYDIR}/vmlinux-${LINUX_VERSION}.${MACHINE}.gz
+    xz --check=crc32 --lzma2=preset=6e,dict=64KiB < vmlinux.bin > ${DEPLOYDIR}/vmlinux-${LINUX_VERSION}.${MACHINE}.xz
     rm -f linux.bin
 }
