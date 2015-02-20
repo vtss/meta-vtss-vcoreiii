@@ -1,1 +1,1 @@
-FILESEXTRAPATHS_prepend_vcoreiii := "${THISDIR}/${PN}:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
