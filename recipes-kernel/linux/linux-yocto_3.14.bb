@@ -8,8 +8,8 @@ KMETA = ""
 
 SRC_URI = "git://github.com/vtss/linux-stable.git;protocol=git;bareclone=1;branch=${KBRANCH}"
 
-SRCREV                = "fcd1c9cbe39d88ef007832d3898b70295ebd1abe"
-SRCREV_machine        = "fcd1c9cbe39d88ef007832d3898b70295ebd1abe"
+SRCREV                = "03f812d6adf56591f6ace2211c73b789a1a0c221"
+SRCREV_machine        = "03f812d6adf56591f6ace2211c73b789a1a0c221"
 
 PR = "r1"
 PV = "${LINUX_VERSION}+git${SRCPV}"
@@ -20,7 +20,7 @@ SRC_URI_append_jaguar1 =      " file://jaguar1.scc file://jaguar1.cfg"
 SRC_URI_append_jaguar1-dual = " file://jaguar1-dual.scc file://jaguar1-dual.cfg"
 SRC_URI_append_serval1 =      " file://serval1.scc file://serval1.cfg"
 SRC_URI_append_jaguar2 =      " file://jaguar2.scc file://jaguar2.cfg"
-SRC_URI_append_serval2 =      " file://serval2.cfg"
+SRC_URI_append_serval2 =      " file://serval2.scc file://serval2.cfg"
 
 COMPATIBLE_MACHINE = "luton26|jaguar1|jaguar1-dual|serval1|jaguar2|serval2"
 
