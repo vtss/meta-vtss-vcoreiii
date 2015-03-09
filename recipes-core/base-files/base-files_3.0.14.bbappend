@@ -3,8 +3,6 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/${PN}:"
 SRC_URI += " file://etc/preinit \
 	     file://etc/diag.sh \
 	     file://etc/functions.sh \
-	     file://etc/rc.common \
-	     file://etc/rc.local \
 	     file://sbin/mount_root \
 	     file://bin/firstboot \
 "
