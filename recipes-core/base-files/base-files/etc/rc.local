@@ -1,4 +1,0 @@
-# This file is for adding custom commands which would be executed right after the system init finished.
-# Currently it is empty by default.
-
-exit 0
