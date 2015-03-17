@@ -2,6 +2,8 @@
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin
 . /etc/diag.sh
 
+ifconfig lo 127.0.0.1
+
 # Mount
 mount proc /proc -t proc
 mount sysfs /sys -t sysfs
@@ -18,7 +20,7 @@ dd if=/dev/console of=/dev/null bs=1 count=0 >/dev/null 2>/dev/null && {
 exec <$M0 >$M1 2>&0
 
 # Start preinit to setup Unionfs
-echo "- vtss-preinit -"
+# echo "- vtss-preinit -"
 trap 'FAILSAFE=true' INT
 trap 'FAILSAFE=true' USR1
 if [ -e /etc/preinit.arch ]; then
@@ -34,6 +36,6 @@ lock -w /tmp/.failsafe
 
 if [ -z "$INITRAMFS" ]; then
 	mount_root
-	echo "- vtss-init -"
+#	echo "- vtss-init -"
 	exec /sbin/init
 fi

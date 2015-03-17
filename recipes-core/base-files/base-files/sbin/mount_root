@@ -9,11 +9,11 @@ jffs2_ready () {
 }
 
 if grep rootfs_data /proc/mtd >/dev/null 2>/dev/null; then {
-        echo "rootfs_data is available"
+#        echo "rootfs_data is available"
 	. /bin/firstboot
         mtd unlock rootfs_data
 	{
-                echo "switching to jffs2"
+#                echo "switching to jffs2"
                 mount "$(find_mtd_part rootfs_data)" /jffs -t jffs2 && \
                         fopivot /jffs /rom
         } || {
@@ -22,13 +22,14 @@ if grep rootfs_data /proc/mtd >/dev/null 2>/dev/null; then {
         }
 }
 elif grep mmcblk0p1 /proc/partitions > /dev/null 2>/dev/null; then {
-	echo "sd/mmc card is available"
+#	echo "sd/mmc card is available"
 	. /bin/firstboot
 	{
-	    echo "switching to sd/mmc"
+#	    echo "switching to sd/mmc"
 	    mount /dev/mmcblk0p1 /mmc -t ext2
 	    if grep /dev/mmcblk0p1 /proc/mounts; then
-		echo "sd/mmc card is mounted"
+#		echo "sd/mmc card is mounted"
+		: # standard bash noop is a colon, cannot be empty (and a comment counts as empty) in if-then clause
 	    else
 		echo "sd/mmc card is not mounted!"
 	    fi
