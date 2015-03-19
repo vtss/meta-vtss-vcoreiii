@@ -37,5 +37,191 @@ lock -w /tmp/.failsafe
 if [ -z "$INITRAMFS" ]; then
 	mount_root
 #	echo "- vtss-init -"
-	exec /sbin/init
+#	exec /sbin/init # replace the major part of default init as below
+
+#./etc/init.d/networking start
+PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
+[ -x /sbin/ifup ] || exit 0
+echo -n "Configuring network interfaces... "
+sysctl -e -p /etc/sysctl.conf >/dev/null 2>&1
+ifup -a
+echo "done."
+
+#./etc/init.d/dropbear start
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/dropbear
+NAME=dropbear
+DESC="Dropbear SSH server... "
+PIDFILE=/var/run/dropbear.pid
+
+DROPBEAR_PORT=22
+DROPBEAR_EXTRA_ARGS=
+NO_START=0
+
+set -e
+
+test ! -r /etc/default/dropbear || . /etc/default/dropbear
+test "$NO_START" = "0" || exit 0
+test -x "$DAEMON" || exit 0
+test ! -h /var/service/dropbear || exit 0
+
+readonly_rootfs=0
+for flag in `awk '{ if ($2 == "/") { split($4,FLAGS,",") } }; END { for (f in FLAGS) print FLAGS[f] }' </proc/mounts`; do
+  case $flag in
+   ro)
+     readonly_rootfs=1
+     ;;
+  esac
+done
+
+if [ $readonly_rootfs = "1" ]; then
+  mkdir -p /var/lib/dropbear
+  DROPBEAR_RSAKEY_DEFAULT="/var/lib/dropbear/dropbear_rsa_host_key"
+  DROPBEAR_DSSKEY_DEFAULT="/var/lib/dropbear/dropbear_dss_host_key"
+else
+  DROPBEAR_RSAKEY_DEFAULT="/etc/dropbear/dropbear_rsa_host_key"
+  DROPBEAR_DSSKEY_DEFAULT="/etc/dropbear/dropbear_dss_host_key"
+fi
+
+test -z "$DROPBEAR_BANNER" || \
+  DROPBEAR_EXTRA_ARGS="$DROPBEAR_EXTRA_ARGS -b $DROPBEAR_BANNER"
+test -n "$DROPBEAR_RSAKEY" || \
+  DROPBEAR_RSAKEY=$DROPBEAR_RSAKEY_DEFAULT
+test -n "$DROPBEAR_DSSKEY" || \
+  DROPBEAR_DSSKEY=$DROPBEAR_DSSKEY_DEFAULT
+test -n "$DROPBEAR_KEYTYPES" || \
+  DROPBEAR_KEYTYPES="rsa"
+
+gen_keys() {
+for t in $DROPBEAR_KEYTYPES; do
+  case $t in
+    rsa)
+        if [ -f "$DROPBEAR_RSAKEY" -a ! -s "$DROPBEAR_RSAKEY" ]; then
+                rm $DROPBEAR_RSAKEY || true
+        fi
+        test -f $DROPBEAR_RSAKEY || dropbearkey -t rsa -f $DROPBEAR_RSAKEY
+        ;;
+    dsa)
+        if [ -f "$DROPBEAR_DSSKEY" -a ! -s "$DROPBEAR_DSSKEY" ]; then
+                rm $DROPBEAR_DSSKEY || true
+        fi
+        test -f $DROPBEAR_DSSKEY || dropbearkey -t dss -f $DROPBEAR_DSSKEY
+        ;;
+  esac
+done
+}
+
+echo -n "Starting $DESC: "
+gen_keys
+KEY_ARGS=""
+test -f $DROPBEAR_DSSKEY && KEY_ARGS="$KEY_ARGS -d $DROPBEAR_DSSKEY"
+test -f $DROPBEAR_RSAKEY && KEY_ARGS="$KEY_ARGS -r $DROPBEAR_RSAKEY"
+start-stop-daemon -S -p $PIDFILE \
+    -x "$DAEMON" -- $KEY_ARGS \
+    -p "$DROPBEAR_PORT" $DROPBEAR_EXTRA_ARGS
+echo "$NAME."
+
+
+#./etc/init.d/hiawatha start
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/sbin/hiawatha
+NAME=hiawatha
+DESC="Hiawatha Web Server"
+OPTS=""
+LOGDIR=/var/log/hiawatha
+
+echo -n "Starting $DESC: "
+mkdir -p -m 0777 "$LOGDIR"
+start-stop-daemon --start -x "$DAEMON" -- $OPTS
+echo "$NAME."
+	
+#./etc/init.d/rmnologin.sh
+if test -f /etc/nologin.boot
+then
+        rm -f /etc/nologin /etc/nologin.boot
+fi
+
+#./etc/init.d/stop-bootlogd start
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/sbin/bootlogd
+NAME=bootlogd
+DESC="Bootlog daemon"
+
+# source function library
+. /etc/init.d/functions
+
+test -f $DAEMON || exit 0
+
+[ -r /etc/default/bootlogd ] && . /etc/default/bootlogd
+
+## set -e # not needed
+
+case "$BOOTLOGD_ENABLE" in
+        [Nn]*)
+                exit 0
+                ;;
+esac
+
+STOPPER=
+ACTION="$1"
+case "$0" in
+        *stop-bootlog*)
+                STOPPER=Y
+                if [ "$ACTION" = start ]
+                then
+                        ACTION=stop
+                fi
+                ;;
+esac
+
+case "$ACTION" in
+        start)
+                [ "${VERBOSE}" != "no" ] && echo -n "Starting $DESC: "
+                if [ -d /proc/1/. ]
+                then
+                        umask 027
+                        start-stop-daemon --start --quiet \
+                                --exec $DAEMON -- -r -c
+                else
+                        $DAEMON -r -c
+                fi
+                [ "${VERBOSE}" != "no" ] && echo "$NAME."
+                ;;
+        stop)
+                # stop may get called during bootup, so let it honor
+                # rcS VERBOSE setting
+                [ "${VERBOSE}" != "no" ] && echo -n "Stopping $DESC: "
+                start-stop-daemon --stop --quiet --exec $DAEMON
+
+                if [ "$STOPPER" ] && [ "$(which savelog 2>/dev/null)" ] && \
+                   [ -f /var/log/boot ] && [ -f /var/log/boot~ ]
+                then
+                        cd /var/log
+                        chgrp adm boot
+                        savelog -p -c 5 boot > /dev/null 2>&1
+                        mv boot.0 boot
+                        mv boot~ boot.0
+                fi
+
+                [ "${VERBOSE}" != "no" ] && echo "$NAME."
+                ;;
+         restart|force-reload)
+                echo -n "Restarting $DESC: "
+                start-stop-daemon --stop --quiet --exec $DAEMON
+                sleep 1
+                start-stop-daemon --start --quiet --exec $DAEMON
+                echo "$NAME."
+                ;;
+        status)
+                status $DAEMON
+                exit $?
+                ;;
+        *)
+                N=${0##*/}
+                N=${N#[SK]??}
+                echo "Usage: $N {start|stop|status|restart|force-reload}" >&2
+                exit 1
+                ;;
+esac
+
 fi
