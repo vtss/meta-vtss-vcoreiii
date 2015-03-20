@@ -38,6 +38,14 @@ if [ -z "$INITRAMFS" ]; then
 	mount_root
 #	echo "- vtss-init -"
 #	exec /sbin/init # replace the major part of default init as below
+	if [ $$ == 1 ]; then
+	    ## starts by init=/etc/preinit
+	    exec /sbin/init
+	    exit 0
+	else
+	    ## starts by init=/usr/bin/vtss_smbstax
+	    :;
+	fi
 
 #./etc/init.d/networking start
 PATH="/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin"
