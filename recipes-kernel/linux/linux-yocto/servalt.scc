@@ -1,0 +1,10 @@
+#
+# The top-level 'feature' for the servalt custom kernel.
+#
+# Essentially this is a convenient top-level container or starting
+# point for adding lower-level config fragements and features.
+#
+define KMACHINE servalt
+define KTYPE standard
+define KARCH mips
+kconf hardware servalt.cfg

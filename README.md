@@ -70,6 +70,7 @@ serval1         | VSC5616EV, VSC5617EV, VSC5618EV, VSC5619EV
 serval2         | VSC5629EV
 jaguar2-cu24    | VSC5628EV
 jaguar2-cu48    | VSC5627EV
+servalt         | VSC5630EV
 
 To enable the vcoreiii layer, add the appropriate MACHINE to local.conf (f.ex):
 
@@ -106,9 +107,10 @@ luton26         | 0x40800000 | 0x40A00000 |     6 MB |    NAND  |
 jaguar1-cu24    | 0x40800000 | 0x40A00000 |     6 MB |    NAND  |
 jaguar1-cu48    | 0x40800000 | 0x40A00000 |     6 MB |    NAND  |
 serval1         | 0x40880000 | 0x40A80000 |   4.5 MB |  SD/MMC  |
-serval2         | 0x40E00000 | 0x41000000 |    10 MB |     NOR  |
-jaguar2-cu24    | 0x40E00000 | 0x41000000 |    10 MB |     NOR  |
-jaguar2-cu48    | 0x40E00000 | 0x41000000 |    10 MB |     NOR  |
+serval2         | 0x40E00000 | 0x41000000 |    10 MB |    NAND  |
+jaguar2-cu24    | 0x40E00000 | 0x41000000 |    10 MB |    NAND  |
+jaguar2-cu48    | 0x40E00000 | 0x41000000 |    10 MB |    NAND  |
+servalt         | 0x40E00000 | 0x41000000 |    10 MB |    NAND  |
 
 The kernel is assumed to reserve 2 MB in all configurations. The root
 file system in the NOR flash is mounted read-only, but augmented with
